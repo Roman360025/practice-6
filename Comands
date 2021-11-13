@@ -1,0 +1,10 @@
+
+CREATE EXTERNAL TABLE Base(Day int, TickTime double,  HValue int, userid int) row format delimited fields terminated by ',	' location '/list_h_6' TBLPROPERTIES ("skip.header.line.count"="1");
+
+CREATE TABLE userlog (day int, ticktime double) partitioned by (hvalue int, userid int) stored as parquet;
+
+INSERT INTO userlog SELECT * FROM base;
+
+hadoop fs -du -h /user/hive/warehouse/test_db.db/
+
+ 
